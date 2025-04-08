@@ -65,8 +65,8 @@
 #
 class ec2tagfacts (
 
-  $aws_access_key_id      = undef,  # if undef we assume they are setup correctly already
-  $aws_secret_access_key  = undef,
+  Optional[String]     $aws_access_key_id      = undef,  # if undef we assume they are setup correctly already
+  Optional[String]     $aws_secret_access_key  = undef,
   $aws_cli_ini_settings   = $ec2tagfacts::params::aws_cli_ini_settings,
   $manage_awscli          = true,
   $enable_epel            = $ec2tagfacts::params::enable_epel,
@@ -76,16 +76,6 @@ class ec2tagfacts (
   $awscli_pkg             = $ec2tagfacts::params::awscli_pkg,
 
 ) inherits ec2tagfacts::params {
-
-
-  if (!is_string($aws_access_key_id)) {
-    fail('ERROR: ec2tagfacts::aws_access_key_id must be a string')
-  }
-
-  if (!is_string($aws_secret_access_key)) {
-    fail('ERROR: ec2tagfacts::aws_secret_access_key must be a string')
-  }
-
   if $manage_awscli {
     if $enable_epel {
       include ::epel
